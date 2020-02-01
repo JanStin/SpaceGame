@@ -1,7 +1,9 @@
 C:\Users\Rico\source\repos\GameTut\GameTut\bin\Debug\GameTut.exe.config
 C:\Users\Rico\source\repos\GameTut\GameTut\bin\Debug\GameTut.exe
 C:\Users\Rico\source\repos\GameTut\GameTut\bin\Debug\GameTut.pdb
-C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.csprojAssemblyReference.cache
 C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.csproj.CoreCompileInputs.cache
 C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.exe
 C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.pdb
+C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.Properties.Resources.resources
+C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.csproj.GenerateResource.cache
+C:\Users\Rico\source\repos\GameTut\GameTut\obj\Debug\GameTut.csprojAssemblyReference.cache

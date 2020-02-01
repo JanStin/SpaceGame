@@ -45,14 +45,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseObject.cs" />
+    <Compile Include="BaseObject\Asteroid.cs" />
+    <Compile Include="BaseObject\BaseObject.cs" />
+    <Compile Include="BaseObject\Bullet.cs" />
+    <Compile Include="BaseObject\Circle.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Interfaces\ICollision.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Star.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="BaseObject\Star.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\borderStar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circleStar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\starrySky.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\releases.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

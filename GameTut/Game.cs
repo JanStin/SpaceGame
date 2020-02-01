@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using GameTut.BaseObject;
+using System.Collections.Generic;
 
 namespace GameTut
 {
     public static class Game
     {
-        static BaseObject[] objects;
+        static BaseObject.BaseObject[] objects;
+        static Bullet bullet;
+        static Asteroid[] asteroids;
+
+        static List<BaseObject.BaseObject> objectsList = new List<BaseObject.BaseObject>();
 
         static BufferedGraphicsContext bufGrhContext;
         public static BufferedGraphics Buffer;
@@ -14,6 +20,7 @@ namespace GameTut
         public static int Width { get; set; }
         public static int Height { get; set; }
 
+        // Construct 
         static Game()
         {
 
@@ -30,8 +37,10 @@ namespace GameTut
 
             Load();
 
-            Timer timer = new Timer();
-            timer.Interval = 100;
+            Timer timer = new Timer
+            {
+                Interval = 100
+            };
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -45,34 +54,57 @@ namespace GameTut
         public static void Draw()
         {
             Buffer.Graphics.Clear(Color.Black);
-            //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+            Buffer.Graphics.DrawImage(Properties.Resources.starrySky, 0, 0, Width, Height);
+            
+            
             foreach (var obj in objects)
             {
                 obj.Draw();
             }
+            foreach (var obj in asteroids)
+            {
+                obj.Draw();
+            }
+            bullet.Draw();
+
             Buffer.Render();
         }
 
         public static void Update()
         {
-            foreach(var obj in objects)
+            foreach (var obj in asteroids)
             {
                 obj.Update();
             }
+            foreach (var obj in objects)
+            {
+                obj.Update();
+            }
+            bullet.Update();
         }
 
         public static void Load()
         {
-            objects = new BaseObject[30];
+            Random random = new Random();
 
-            for (var i = 0; i < 15; i++)
+            objects = new BaseObject.BaseObject[30];
+            asteroids = new Asteroid[3];
+
+            bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 8));
+
+            int placeCreated;
+            int sizeAsteroid;          
+
+            for (var i = 0; i < objects.Length; i++)
             {
-                objects[i] = new BaseObject(new Point(600, i * 20), new Point(15 - i, 15 - i), new Size(20, 20));
+                placeCreated = random.Next(5, 51);
+                objects[i] = new Star(new Point(Width, random.Next(0, Height)), new Point(-placeCreated, 0), new Size(15, 15));
             }
-            for (var i = 15; i < objects.Length; i++)
+
+            for (var i = 0; i < asteroids.Length; i++)
             {
-                objects[i] = new Star(new Point(600, i * 20), new Point(15 - i, 15 - i), new Size(20, 20));
+                sizeAsteroid = random.Next(10, 56);
+                asteroids[i] = new Asteroid(new Point(Width, random.Next(0, Height)), new Point(-sizeAsteroid, sizeAsteroid), new Size(sizeAsteroid, sizeAsteroid));
             }
         }
     }

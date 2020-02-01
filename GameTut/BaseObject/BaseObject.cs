@@ -1,17 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameTut
+
+namespace GameTut.BaseObject
 {
-    public class BaseObject
+
+    public abstract class BaseObject : ICollision
     {
         protected Point position;
         protected Point direct;
         protected Size size;
+
+        public Rectangle Rect
+        {
+            get { return new Rectangle(position, size); }
+        }
+
+        protected Random random = new Random();
 
         public BaseObject(Point position, Point direct, Size size)
         {
@@ -20,24 +25,27 @@ namespace GameTut
             this.size = size;
         }
 
-        public virtual void Draw()
-        {
-            Game.Buffer.Graphics.DrawEllipse(Pens.Gray, position.X, position.Y, size.Width, size.Height);
-        }
+        public abstract void Draw();
 
-        public void Update()
+        public virtual void Update()
         {
             position.X = position.X + direct.X;
-            position.Y = position.Y + direct.Y;
 
             if (position.X < 0 || position.X > Game.Width)
             {
                 direct.X = -direct.X;
             }
+        }
 
-            if (position.Y < 0 || position.Y > Game.Height)
+        public bool Collision(ICollision obj)
+        {
+            if (obj.Rect.IntersectsWith(this.Rect))
             {
-                direct.Y = -direct.Y;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
