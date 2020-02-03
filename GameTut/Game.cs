@@ -74,6 +74,12 @@ namespace GameTut
         {
             foreach (var obj in asteroids)
             {
+                if (obj.Collision(bullet))
+                {
+                    obj.Clash = true;
+                    bullet.Clash = true;
+                }
+
                 obj.Update();
             }
             foreach (var obj in objects)

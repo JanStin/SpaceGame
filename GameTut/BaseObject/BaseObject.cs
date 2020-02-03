@@ -10,6 +10,7 @@ namespace GameTut.BaseObject
         protected Point position;
         protected Point direct;
         protected Size size;
+        public bool Clash { protected get; set; }
 
         public Rectangle Rect
         {
@@ -23,6 +24,7 @@ namespace GameTut.BaseObject
             this.position = position;
             this.direct = direct;
             this.size = size;
+            Clash = false;
         }
 
         public abstract void Draw();

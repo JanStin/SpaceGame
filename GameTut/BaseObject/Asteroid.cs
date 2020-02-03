@@ -27,10 +27,11 @@ namespace GameTut.BaseObject
         {
             position.X = position.X + direct.X;
 
-            if (position.X < 0 || position.X > Game.Width)
+            if (position.X < 0 || position.X > Game.Width || Clash)
             {
                 position.X = Game.Width;
                 position.Y = random.Next(0, Game.Height);
+                Clash = false;
 
                 int sizeAsteroid = random.Next(10, 66);
                 size.Height = sizeAsteroid;
