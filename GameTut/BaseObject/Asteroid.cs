@@ -14,7 +14,7 @@ namespace GameTut.BaseObject
 
         public Asteroid(Point position, Point direct, Size size) : base(position, direct, size)
         {
-            power = 1;
+            power = random.Next(1, 4);
         }
 
 

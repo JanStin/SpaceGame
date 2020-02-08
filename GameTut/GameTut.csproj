@@ -49,6 +49,7 @@
     <Compile Include="BaseObject\BaseObject.cs" />
     <Compile Include="BaseObject\Bullet.cs" />
     <Compile Include="BaseObject\Circle.cs" />
+    <Compile Include="BaseObject\Ship.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interfaces\ICollision.cs" />
     <Compile Include="Program.cs" />
@@ -86,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\releases.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spaceship.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

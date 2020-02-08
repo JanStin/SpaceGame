@@ -16,7 +16,7 @@ namespace GameTut
 
             Game.Init(form);  
             form.Show();
-            //Game.Draw();
+            
             Application.Run(form);
         }
     }

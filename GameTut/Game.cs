@@ -11,6 +11,7 @@ namespace GameTut
         static BaseObject.BaseObject[] objects;
         static Bullet bullet;
         static Asteroid[] asteroids;
+        static Ship ship;
 
         static List<BaseObject.BaseObject> objectsList = new List<BaseObject.BaseObject>();
 
@@ -19,6 +20,11 @@ namespace GameTut
 
         public static int Width { get; set; }
         public static int Height { get; set; }
+
+        private static Timer timer = new Timer
+        {
+            Interval = 100
+        };
 
         // Construct 
         static Game()
@@ -35,12 +41,11 @@ namespace GameTut
             Height = form.Height;
             Buffer = bufGrhContext.Allocate(grh, new Rectangle(0, 0, Width, Height));
 
+            form.KeyDown += Form_KeyDown;
+
             Load();
 
-            Timer timer = new Timer
-            {
-                Interval = 100
-            };
+            
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -65,28 +70,43 @@ namespace GameTut
             {
                 obj.Draw();
             }
-            bullet.Draw();
+            bullet?.Draw();
+            ship.Draw();
 
+            Buffer.Graphics.DrawString("Energy:" + ship.Energy, SystemFonts.DefaultFont, Brushes.AntiqueWhite, 0, 0);
             Buffer.Render();
         }
 
         public static void Update()
         {
+            bullet?.Update();
             foreach (var obj in asteroids)
             {
                 if (obj.Collision(bullet))
                 {
+                    System.Media.SystemSounds.Beep.Play();
                     obj.Clash = true;
                     bullet.Clash = true;
                 }
 
                 obj.Update();
+
+                if (ship.Collision(obj))
+                {
+                    obj.Clash = true;
+                    ship.Damage();
+
+                }
             }
             foreach (var obj in objects)
             {
                 obj.Update();
             }
-            bullet.Update();
+            
+            if (ship.Die)
+            {
+                Finish();
+            }
         }
 
         public static void Load()
@@ -96,6 +116,7 @@ namespace GameTut
             objects = new BaseObject.BaseObject[30];
             asteroids = new Asteroid[3];
 
+            ship = new Ship(new Point(15, 400), new Point(5, 5), new Size(15, 10));
             bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 8));
 
             int placeCreated;
@@ -112,6 +133,31 @@ namespace GameTut
                 sizeAsteroid = random.Next(10, 56);
                 asteroids[i] = new Asteroid(new Point(Width, random.Next(0, Height)), new Point(-sizeAsteroid, sizeAsteroid), new Size(sizeAsteroid, sizeAsteroid));
             }
+        }
+
+        static private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.E:
+                    bullet = new Bullet(new Point(ship.Rect.X + 10, ship.Rect.Y + 4), new Point(4, 0), new Size(8, 8));
+                    break;
+                case Keys.W:
+                    ship.Up();
+                    break;
+                case Keys.S:
+                    ship.Down();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        static private void Finish()
+        {
+            timer.Stop();
+            Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.White, 200, 100);
+            Buffer.Render();
         }
     }
 }
