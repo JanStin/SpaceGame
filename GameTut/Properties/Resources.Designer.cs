@@ -63,26 +63,6 @@ namespace GameTut.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap borderStar {
-            get {
-                object obj = ResourceManager.GetObject("borderStar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap circleStar {
-            get {
-                object obj = ResourceManager.GetObject("circleStar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap pets {
             get {
                 object obj = ResourceManager.GetObject("pets", resourceCulture);

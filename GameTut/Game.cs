@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using System.Drawing;
 using GameTut.BaseObject;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GameTut
 {

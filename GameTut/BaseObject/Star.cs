@@ -11,6 +11,7 @@ namespace GameTut.BaseObject
 
         public override void Draw()
         {
+            
             Game.Buffer.Graphics.DrawImage(Properties.Resources.star, position.X, position.Y, size.Width, size.Height);
         }
 
