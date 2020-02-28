@@ -19,11 +19,9 @@ namespace GameTut.BaseObject
         {
             position.X = position.X + 3;
 
-            if (position.X < 0 || position.X > Game.Width || Clash)
+            if (position.X < 0 || position.X > Game.Width)
             {
-                position.X = 0;
-                position.Y = random.Next(0, Game.Height);
-                Clash = false;
+                Clash = true;
             }
         }
     }

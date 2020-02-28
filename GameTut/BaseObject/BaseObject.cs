@@ -10,7 +10,7 @@ namespace GameTut.BaseObject
         protected Point position;
         protected Point direct;
         protected Size size;
-        public bool Clash { protected get; set; }
+        public bool Clash;
 
         public Rectangle Rect
         {

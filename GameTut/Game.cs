@@ -3,13 +3,14 @@ using System.Windows.Forms;
 using System.Drawing;
 using GameTut.BaseObject;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameTut
 {
     public static class Game
     {
         static BaseObject.BaseObject[] objects;
-        static Bullet bullet;
+        static List<Bullet> bullets = new List<Bullet>();
         static Asteroid[] asteroids;
         static Ship ship;
 
@@ -70,7 +71,10 @@ namespace GameTut
             {
                 obj.Draw();
             }
-            bullet?.Draw();
+            foreach (var bullet in bullets)
+            {
+                bullet.Draw();
+            }
             ship.Draw();
 
             Buffer.Graphics.DrawString("Energy:" + ship.Energy, SystemFonts.DefaultFont, Brushes.AntiqueWhite, 0, 0);
@@ -79,30 +83,45 @@ namespace GameTut
 
         public static void Update()
         {
-            bullet?.Update();
-            foreach (var obj in asteroids)
+            for (var i = 0; i < bullets.Count; i++)
             {
-                if (obj.Collision(bullet))
+                if (bullets[i].Clash)
                 {
-                    System.Media.SystemSounds.Beep.Play();
-                    obj.Clash = true;
-                    bullet.Clash = true;
+                    bullets.RemoveAt(i);
+                    i--;
+                    continue;
                 }
-
-                obj.Update();
-
-                if (ship.Collision(obj))
-                {
-                    obj.Clash = true;
-                    ship.Damage();
-
-                }
+                bullets[i].Update();
             }
+            
             foreach (var obj in objects)
             {
                 obj.Update();
             }
-            
+
+            for (var i = 0; i < asteroids.Length; i++)
+            {
+                asteroids[i].Update();
+
+                for (var j = 0; j < bullets.Count; j++)
+                {
+                    if (asteroids[i].Collision(bullets[j]))
+                    {
+                        System.Media.SystemSounds.Beep.Play();
+                        asteroids[i].Clash = true;
+                        bullets.RemoveAt(j);
+                        j--;
+                    }
+                }
+
+                if (ship.Collision(asteroids[i]))
+                {
+                    asteroids[i].Clash = true;
+                    ship.Damage();
+                }
+            }
+
+           
             if (ship.Die)
             {
                 Finish();
@@ -117,7 +136,6 @@ namespace GameTut
             asteroids = new Asteroid[3];
 
             ship = new Ship(new Point(15, 400), new Point(5, 5), new Size(15, 10));
-            bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 8));
 
             int placeCreated;
             int sizeAsteroid;          
@@ -140,7 +158,7 @@ namespace GameTut
             switch (e.KeyCode)
             {
                 case Keys.E:
-                    bullet = new Bullet(new Point(ship.Rect.X + 10, ship.Rect.Y + 4), new Point(4, 0), new Size(8, 8));
+                    bullets.Add(new Bullet(new Point(ship.Rect.X + 10, ship.Rect.Y + 4), new Point(4, 0), new Size(8, 8)));
                     break;
                 case Keys.W:
                     ship.Up();
